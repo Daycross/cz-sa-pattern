@@ -1,3 +1,6 @@
-export const config = {
-    path: './config.js',
-};
+module.exports = {
+    config: {
+      path: './config.js',
+    },
+  };
+  
