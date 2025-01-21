@@ -1,0 +1,9 @@
+{
+  "name": "cz-sa-pattern",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "cz-customizable": "^7.4.0"
+  }
+}
