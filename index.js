@@ -1,5 +1,5 @@
 const config = require('./config.js');
-const { prompt } = require('inquirer');
+const inquirer = require('inquirer');
 
 module.exports = {
   prompter: (cz, commit) => {
@@ -16,7 +16,7 @@ module.exports = {
         message: config.messages.scope,
         choices: [
           ...config.scopes.map(scope => scope.name),
-          new prompt.Separator(),
+          new inquirer.Separator(), // Corrigido para usar inquirer.Separator
           'custom',
         ],
       },
@@ -30,7 +30,10 @@ module.exports = {
         type: 'input',
         name: 'subject',
         message: config.messages.subject,
-        validate: input => (input.length <= config.subjectLimit ? true : `Limite de ${config.subjectLimit} caracteres excedido.`),
+        validate: input =>
+          input.length <= config.subjectLimit
+            ? true
+            : `Limite de ${config.subjectLimit} caracteres excedido.`,
       },
       {
         type: 'input',
@@ -55,8 +58,12 @@ module.exports = {
       },
     ];
 
-    prompt(questions).then(answers => {
-      const scope = answers.customScope ? `(${answers.customScope})` : answers.scope ? `(${answers.scope})` : '';
+    inquirer.prompt(questions).then(answers => {
+      const scope = answers.customScope
+        ? `(${answers.customScope})`
+        : answers.scope
+        ? `(${answers.scope})`
+        : '';
       const breaking = answers.breaking ? `\n\nBREAKING CHANGE:\n${answers.breaking}` : '';
       const footer = answers.footer ? `\n\n${config.footerPrefix} ${answers.footer}` : '';
 
