@@ -6,12 +6,6 @@ module.exports = {
     const questions = [
       {
         type: 'list',
-        name: 'emoji',
-        message: 'Escolha um emoji para o commit:',
-        choices: config.emojis,
-      },
-      {
-        type: 'list',
         name: 'type',
         message: config.messages.type,
         choices: config.types,
@@ -78,8 +72,8 @@ module.exports = {
         // If there is a footer, it will be added to the message
         const footer = answers.footer ? `\n\n${config.footerPrefix} ${answers.footer}` : '';
       
-        // Ensuring that the emoji is correctly concatenated at the beginning of the message
-        const commitMessage = `${answers.emoji} ${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
+        // Constructing the commit message without emoji
+        const commitMessage = `${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
       
         // Check that 'type' and 'subject' are not empty before attempting to commit
         if (!answers.type || !answers.subject) {
@@ -92,6 +86,5 @@ module.exports = {
           commit(commitMessage);
         }
       });
-      
   },
 };
