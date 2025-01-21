@@ -65,18 +65,33 @@ module.exports = {
     ];
 
     inquirer.prompt(questions).then(answers => {
-      const scope = answers.customScope
-        ? `(${answers.customScope})`
-        : answers.scope
-        ? `(${answers.scope})`
-        : '';
-      const breaking = answers.breaking ? `\n\nBREAKING CHANGE:\n${answers.breaking}` : '';
-      const footer = answers.footer ? `\n\n${config.footerPrefix} ${answers.footer}` : '';
-
-      const commitMessage = `${answers.emoji} ${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
-      if (answers.confirmCommit) {
-        commit(commitMessage);
-      }
-    });
+        // If the scope is custom, it will be assigned with parentheses
+        const scope = answers.customScope
+          ? `(${answers.customScope})`
+          : answers.scope
+          ? `(${answers.scope})`
+          : '';
+      
+        // If there is a breaking change, it will be formatted
+        const breaking = answers.breaking ? `\n\nBREAKING CHANGE:\n${answers.breaking}` : '';
+      
+        // If there is a footer, it will be added to the message
+        const footer = answers.footer ? `\n\n${config.footerPrefix} ${answers.footer}` : '';
+      
+        // Ensuring that the emoji is correctly concatenated at the beginning of the message
+        const commitMessage = `${answers.emoji} ${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
+      
+        // Check that 'type' and 'subject' are not empty before attempting to commit
+        if (!answers.type || !answers.subject) {
+          console.error('Error: O tipo e o assunto não podem estar vazios!');
+          return;
+        }
+      
+        // Performing the commit, if confirmed
+        if (answers.confirmCommit) {
+          commit(commitMessage);
+        }
+      });
+      
   },
 };
