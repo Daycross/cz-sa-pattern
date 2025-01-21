@@ -6,6 +6,12 @@ module.exports = {
     const questions = [
       {
         type: 'list',
+        name: 'emoji',
+        message: 'Escolha um emoji para o commit:',
+        choices: config.emojis,
+      },
+      {
+        type: 'list',
         name: 'type',
         message: config.messages.type,
         choices: config.types,
@@ -16,7 +22,7 @@ module.exports = {
         message: config.messages.scope,
         choices: [
           ...config.scopes.map(scope => scope.name),
-          new inquirer.Separator(), // Corrigido para usar inquirer.Separator
+          new inquirer.Separator(),
           'custom',
         ],
       },
@@ -67,7 +73,7 @@ module.exports = {
       const breaking = answers.breaking ? `\n\nBREAKING CHANGE:\n${answers.breaking}` : '';
       const footer = answers.footer ? `\n\n${config.footerPrefix} ${answers.footer}` : '';
 
-      const commitMessage = `${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
+      const commitMessage = `${answers.emoji} ${answers.type}${scope}: ${answers.subject}${breaking}${footer}`;
       if (answers.confirmCommit) {
         commit(commitMessage);
       }
