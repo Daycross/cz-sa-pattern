@@ -1,8 +1,11 @@
 {
   "name": "cz-sa-pattern",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "update": "yarn version --patch && git push && git push --tags && yarn publish"
+  },
   "devDependencies": {
     "cz-customizable": "^7.4.0",
     "inquirer": "^12.3.2"
